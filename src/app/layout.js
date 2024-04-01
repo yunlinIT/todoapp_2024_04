@@ -1,8 +1,8 @@
-import "./globals.css";
+import './globals.css';
 
 export const metadata = {
-  title: "Main | TodoList",
-  description: "TodoList Management Service",
+  title: 'Main | TodoList',
+  description: 'TodoList Management Service',
 };
 
 export default function RootLayout({ children }) {
