@@ -13,5 +13,5 @@ import {
 } from '@mui/material';
 
 export default function Sub() {
-  return <h1>서브페이지</h1>;
+  return <h1>글작성 페이지</h1>;
 }
