@@ -2,9 +2,10 @@
 
 import * as React from 'react';
 import { ThemeProvider } from '@mui/material/styles';
-import { Button, AppBar, Toolbar } from '@mui/material';
-import theme from './theme';
+import { Button, AppBar, Toolbar, CssBaseline } from '@mui/material';
 import { FaBars } from 'react-icons/fa';
+import theme from './theme';
+import dateToStr from './dateUtil';
 
 const useTodoStatus = () => {
   const [todos, setTodos] = React.useState([]);
@@ -145,7 +146,7 @@ const TodoList = ({ todoStatus }) => {
   );
 };
 
-export default function App() {
+const App = () => {
   const todoState = useTodoStatus(); // 리액트 커스텀 훅
 
   const onSubmit = (e) => {
@@ -168,53 +169,37 @@ export default function App() {
 
   return (
     <>
-      <ThemeProvider theme={theme}>
-        <AppBar position="fixed">
-          <Toolbar>
-            <div className="tw-flex-1">
-              <FaBars onClick={() => setOpen(true)} className="tw-cursor-pointer" />
-            </div>
-            <div className="logo-box">
-              <a href="/" className="tw-font-bold">
-                NOTE!
-              </a>
-            </div>
-            <div className="tw-flex-1 tw-flex tw-justify-end">
-              <a href="/write">글쓰기</a>
-            </div>
-          </Toolbar>
-        </AppBar>
-        <Toolbar />
-        <form onSubmit={onSubmit}>
-          <input type="text" name="title" autoComplete="off" placeholder="할 일 입력해" />
-          <button type="submit">추가</button>
-          <button type="reset">취소</button>
-        </form>
-        {todoState.todos.length}
-      </ThemeProvider>
+      <AppBar position="fixed">
+        <Toolbar>
+          <div className="tw-flex-1">
+            <FaBars onClick={() => setOpen(true)} className="tw-cursor-pointer" />
+          </div>
+          <div className="logo-box">
+            <a href="/" className="tw-font-bold">
+              TODO!
+            </a>
+          </div>
+          <div className="tw-flex-1 tw-flex tw-justify-end">
+            <a href="/write">글쓰기</a>
+          </div>
+        </Toolbar>
+      </AppBar>
+      <Toolbar />
+      <form onSubmit={onSubmit}>
+        <input type="text" name="title" autoComplete="off" placeholder="할 일 입력해" />
+        <button type="submit">추가</button>
+        <button type="reset">취소</button>
+      </form>
+      {todoState.todos.length}
     </>
   );
-}
+};
 
-// 유틸리티
-
-// 날짜 객체 입력받아서 문장(yyyy-mm-dd hh:mm:ss)으로 반환한다.
-function dateToStr(d) {
-  const pad = (n) => {
-    return n < 10 ? '0' + n : n;
-  };
-
+export default function themeApp() {
   return (
-    d.getFullYear() +
-    '-' +
-    pad(d.getMonth() + 1) +
-    '-' +
-    pad(d.getDate()) +
-    ' ' +
-    pad(d.getHours()) +
-    ':' +
-    pad(d.getMinutes()) +
-    ':' +
-    pad(d.getSeconds())
+    <ThemeProvider theme={theme}>
+      <CssBaseline />
+      <App />
+    </ThemeProvider>
   );
 }
