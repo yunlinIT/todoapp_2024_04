@@ -2,13 +2,13 @@
 
 import * as React from 'react';
 import { ThemeProvider } from '@mui/material/styles';
-import { Button, AppBar, Toolbar, Drawer, List, ListItemButton } from '@mui/material';
+import { Button, AppBar, Toolbar, Tabs, Tab } from '@mui/material';
 import theme from './theme';
 import { FaBars } from 'react-icons/fa';
 import Link from 'next/link';
 
 export default function App() {
-  const [open, setOpen] = React.useState(false);
+  const [tabCurrentIndex, setTabCurrentIndex] = React.useState(0);
 
   return (
     <>
@@ -33,16 +33,14 @@ export default function App() {
           section
         </section>
       </ThemeProvider>
-      <Button onClick={() => setOpen(true)}>show drawer</Button>
-      <Drawer anchor="left" open={open} onClose={() => setOpen(false)}>
-        <List>
-          <ListItemButton>
-            <Link href="/write">글 쓰기</Link>
-          </ListItemButton>
-          <ListItemButton>사과</ListItemButton>
-          <ListItemButton>바나나</ListItemButton>
-        </List>
-      </Drawer>
+      <Tabs value={tabCurrentIndex} onChange={(_, newValue) => setTabCurrentIndex(newValue)}>
+        <Tab label="Item One" />
+        <Tab label="Item Two" />
+        <Tab label="Item Three" />
+      </Tabs>
+      {tabCurrentIndex == 0 && <div>내용1</div>}
+      {tabCurrentIndex == 1 && <div>내용2</div>}
+      {tabCurrentIndex == 2 && <div>내용3</div>}
     </>
   );
 }
