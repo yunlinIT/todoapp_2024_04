@@ -2,11 +2,19 @@
 
 import * as React from 'react';
 import { ThemeProvider } from '@mui/material/styles';
-import { Button, Box, AppBar, Toolbar } from '@mui/material';
+import { Button, Box, AppBar, Toolbar, Snackbar, Alert as MuiAlert } from '@mui/material';
 import theme from './theme';
 import { FaBars } from 'react-icons/fa';
 
+const Alert = React.forwardRef((props, ref) => {
+  return <MuiAlert {...props} ref={ref} variant="filled" />;
+});
+
 export default function App() {
+  const [open, setOpen] = React.useState(false);
+
+  const alertRef = React.useRef(null);
+
   return (
     <>
       <ThemeProvider theme={theme}>
@@ -30,6 +38,22 @@ export default function App() {
           section
         </section>
       </ThemeProvider>
+      <section>
+        <Button onClick={() => setOpen(true)}>Open Snackbar</Button>
+        <Alert ref={alertRef} severity="error" varient="filled">
+          게시물이 삭제되었습니다.
+        </Alert>
+        <Alert severity="success" varient="outlined">
+          This is a success msg!!!!!
+        </Alert>
+        <Snackbar
+          open={open}
+          autoHideDuration={2000}
+          onClose={() => setOpen(false)}
+          message="Note archived">
+          <Alert severity="warning">게시물이 삭제됨</Alert>
+        </Snackbar>
+      </section>
     </>
   );
 }
