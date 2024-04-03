@@ -157,11 +157,9 @@ const App = () => {
   const todosState = useTodoStatus(); // 리액트 커스텀 훅
 
   React.useEffect(() => {
-    todosState.addTodo(
-      '스쿼트스쿼트스쿼트스쿼트스쿼트스쿼트스쿼트스쿼트스쿼트스쿼트스쿼트스쿼트스쿼트스쿼트스쿼트스쿼트스쿼트스쿼트스쿼트스쿼트스쿼트스쿼트스쿼트스쿼트스쿼트스쿼트',
-    );
-    // todosState.addTodo('벤치');
-    // todosState.addTodo('데드');
+    todosState.addTodo('스쿼트');
+    todosState.addTodo('벤치');
+    todosState.addTodo('데드');
   }, []);
 
   const onSubmit = (e) => {
