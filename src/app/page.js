@@ -157,7 +157,7 @@ const App = () => {
     form.title.value = form.title.value.trim();
 
     if (form.title.value.length == 0) {
-      alert('할 일 써');
+      alert('할 일 써.');
       form.title.focus();
       return;
     }
