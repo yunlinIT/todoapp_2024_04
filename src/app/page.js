@@ -21,7 +21,7 @@ function useTodoStatus() {
       content: newContent,
       regDate: dateToStr(new Date()),
     };
-    setTodos((todos) => [...todos, newTodo]);
+    setTodos((todos) => [newTodo, ...todos]);
   };
 
   const removeTodo = (id) => {
@@ -157,7 +157,7 @@ function App() {
   const todosState = useTodoStatus(); // 리액트 커스텀 훅
 
   React.useEffect(() => {
-    todosState.addTodo('스쿼트');
+    todosState.addTodo('스쿼트\n런지');
     todosState.addTodo('벤치');
     todosState.addTodo('데드');
   }, []);
@@ -248,4 +248,3 @@ export default function themeApp() {
     </ThemeProvider>
   );
 }
-s;
