@@ -56,7 +56,7 @@ const NewTodoForm = ({ todoStatus }) => {
         <input
           className="input input-bordered"
           type="text"
-          placeholder="새 할일 입력해"
+          placeholder="새 할일 입력해."
           value={newTodoTitle}
           onChange={(e) => setNewTodoTitle(e.target.value)}
         />
