@@ -2,7 +2,7 @@
 
 import * as React from 'react';
 import { ThemeProvider } from '@mui/material/styles';
-import { Button, AppBar, Toolbar, CssBaseline, TextField, Chip } from '@mui/material';
+import { Button, AppBar, Toolbar, CssBaseline, TextField, Chip, Box } from '@mui/material';
 import { FaBars } from 'react-icons/fa';
 import theme from './theme';
 import dateToStr from './dateUtil';
@@ -186,7 +186,6 @@ function App() {
         <Toolbar>
           <div className="tw-flex-1">
             <FaBars onClick={() => setOpen(true)} className="tw-cursor-pointer" />
-            rounded
           </div>
           <div className="logo-box">
             <a href="/" className="tw-font-bold">
@@ -219,10 +218,17 @@ function App() {
           {todosState.todos.map((todo) => (
             <li key={todo.id}>
               <div className="tw-flex tw-flex-col tw-gap-2 tw-mt-[30px]">
-                <Chip label={`번호 : ${todo.id}`} variant="outlined" color="secondary"></Chip>
-                <Chip label={`날짜 : ${todo.regDate}`} variant="outlined"></Chip>
+                <Chip
+                  className="tw-pt-3"
+                  label={`번호 : ${todo.id}`}
+                  variant="outlined"
+                  color="primary"></Chip>
+                <Chip
+                  className="tw-pt-3"
+                  label={`날짜 : ${todo.regDate}`}
+                  variant="outlined"></Chip>
                 <div className="tw-p-10 tw-rounded-[20px] tw-shadow tw-whitespace-pre-wrap tw-leading-relaxed tw-break-words">
-                  할 일 : {todo.content}
+                  <Box sx={{ color: 'primary.main' }}>{todo.content}</Box>
                 </div>
               </div>
             </li>
@@ -242,3 +248,4 @@ export default function themeApp() {
     </ThemeProvider>
   );
 }
+s;
