@@ -2,24 +2,26 @@
 
 import * as React from 'react';
 import { ThemeProvider } from '@mui/material/styles';
-import { Button, AppBar, Toolbar, CssBaseline, TextField } from '@mui/material';
+import { Button, AppBar, Toolbar, CssBaseline, TextField, Chip } from '@mui/material';
 import { FaBars } from 'react-icons/fa';
 import theme from './theme';
 import dateToStr from './dateUtil';
 
 const useTodoStatus = () => {
+  console.log('실행 1');
+
   const [todos, setTodos] = React.useState([]);
   const lastTodoIdRef = React.useRef(0);
 
-  const addTodo = (newTitle) => {
+  const addTodo = (newContent) => {
     const id = ++lastTodoIdRef.current;
 
     const newTodo = {
       id,
-      title: newTitle,
+      content: newContent,
       regDate: dateToStr(new Date()),
     };
-    setTodos([...todos, newTodo]);
+    setTodos((todos) => [...todos, newTodo]);
   };
 
   const removeTodo = (id) => {
@@ -27,8 +29,8 @@ const useTodoStatus = () => {
     setTodos(newTodos);
   };
 
-  const modifyTodo = (id, title) => {
-    const newTodos = todos.map((todo) => (todo.id != id ? todo : { ...todo, title }));
+  const modifyTodo = (id, content) => {
+    const newTodos = todos.map((todo) => (todo.id != id ? todo : { ...todo, content }));
     setTodos(newTodos);
   };
 
@@ -56,7 +58,7 @@ const NewTodoForm = ({ todoStatus }) => {
         <input
           className="input input-bordered"
           type="text"
-          placeholder="새 할일 입력해."
+          placeholder="새 할일 입력해"
           value={newTodoTitle}
           onChange={(e) => setNewTodoTitle(e.target.value)}
         />
@@ -146,25 +148,36 @@ const TodoList = ({ todoStatus }) => {
   );
 };
 
+let AppCallCount = 0;
+
 const App = () => {
-  const todoState = useTodoStatus(); // 리액트 커스텀 훅
+  AppCallCount++;
+  console.log(`AppCallCount : ${AppCallCount}`);
+
+  const todosState = useTodoStatus(); // 리액트 커스텀 훅
+
+  React.useEffect(() => {
+    todosState.addTodo('스쿼트');
+    // todosState.addTodo('벤치');
+    // todosState.addTodo('데드');
+  }, []);
 
   const onSubmit = (e) => {
     e.preventDefault();
 
     const form = e.currentTarget;
 
-    form.title.value = form.title.value.trim();
+    form.content.value = form.content.value.trim();
 
-    if (form.title.value.length == 0) {
-      alert('할 일 써.');
-      form.title.focus();
+    if (form.content.value.length == 0) {
+      alert('할 일 써');
+      form.content.focus();
       return;
     }
 
-    todoState.addTodo(form.title.value);
-    form.title.value = '';
-    form.title.focus();
+    todosState.addTodo(form.content.value);
+    form.content.value = '';
+    form.content.focus();
   };
 
   return (
@@ -186,17 +199,31 @@ const App = () => {
       </AppBar>
       <Toolbar />
       <form className="tw-flex tw-flex-col tw-p-4 tw-gap-2" onSubmit={onSubmit}>
-        <TextField id="outlined-basic" label="할 일을 입력해" variant="outlined" />
+        <TextField name="content" autoComplete="off" label="할 일을 입력해" variant="outlined" />
         <Button className="tw-font-bold" variant="contained" type="submit">
           추가
         </Button>
       </form>
-      {todoState.todos.length}
+      할 일 갯수 : {todosState.todos.length}
+      <nav>
+        <ul>
+          {todosState.todos.map((todo) => (
+            <li key={todo.id}>
+              <div className="tw-flex tw-flex-col tw-gap-2 tw-mt-[30px]">
+                <Chip label={`번호 : ${todo.id}`} variant="outlined"></Chip>
+                <Chip label={`날짜 : ${todo.regDate}`} variant="outlined"></Chip>
+                <Chip label={`할 일 : ${todo.content}`} variant="outlined" color="primary"></Chip>
+              </div>
+            </li>
+          ))}
+        </ul>
+      </nav>
     </>
   );
 };
 
 export default function themeApp() {
+  console.log('실행 2');
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
