@@ -7,7 +7,7 @@ import { FaBars } from 'react-icons/fa';
 import theme from './theme';
 import dateToStr from './dateUtil';
 
-const useTodoStatus = () => {
+function useTodoStatus() {
   console.log('실행 1');
 
   const [todos, setTodos] = React.useState([]);
@@ -40,7 +40,7 @@ const useTodoStatus = () => {
     removeTodo,
     modifyTodo,
   };
-};
+}
 
 const NewTodoForm = ({ todoStatus }) => {
   const [newTodoTitle, setNewTodoTitle] = useState('');
@@ -150,7 +150,7 @@ const TodoList = ({ todoStatus }) => {
 
 let AppCallCount = 0;
 
-const App = () => {
+function App() {
   AppCallCount++;
   console.log(`AppCallCount : ${AppCallCount}`);
 
@@ -200,7 +200,15 @@ const App = () => {
       </AppBar>
       <Toolbar />
       <form className="tw-flex tw-flex-col tw-p-4 tw-gap-2" onSubmit={onSubmit}>
-        <TextField name="content" autoComplete="off" label="할 일을 입력해" variant="outlined" />
+        <TextField
+          multiline
+          minRows={3}
+          maxRows={10}
+          name="content"
+          autoComplete="off"
+          label="할 일을 입력해"
+          variant="outlined"
+        />
         <Button className="tw-font-bold" variant="contained" type="submit">
           추가
         </Button>
@@ -211,9 +219,9 @@ const App = () => {
           {todosState.todos.map((todo) => (
             <li key={todo.id}>
               <div className="tw-flex tw-flex-col tw-gap-2 tw-mt-[30px]">
-                <Chip label={`번호 : ${todo.id}`} variant="outlined"></Chip>
+                <Chip label={`번호 : ${todo.id}`} variant="outlined" color="secondary"></Chip>
                 <Chip label={`날짜 : ${todo.regDate}`} variant="outlined"></Chip>
-                <div className="tw-p-10 tw-rounded-[20px] tw-shadow tw-whitespace-pre-wrap tw-leading-relaxed">
+                <div className="tw-p-10 tw-rounded-[20px] tw-shadow tw-whitespace-pre-wrap tw-leading-relaxed tw-break-words">
                   할 일 : {todo.content}
                 </div>
               </div>
@@ -223,7 +231,7 @@ const App = () => {
       </nav>
     </>
   );
-};
+}
 
 export default function themeApp() {
   console.log('실행 2');
