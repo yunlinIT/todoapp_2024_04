@@ -228,10 +228,8 @@ function App() {
                     color="primary"
                   />
                 </div>
-                <div className="tw-rounded-[10px] tw-shadow tw-flex tw-text-[14px]">
-                  <Button
-                    className="tw-flex-shrink-0 tw-rounded-[10px_0_0_10px] hover:tw-bg-red-300 tw-items-start"
-                    color="inherit">
+                <div className="tw-rounded-[10px] tw-shadow tw-flex tw-text-[14px] tw-min-h-[80px]">
+                  <Button className="tw-flex-shrink-0 tw-rounded-[10px_0_0_10px]" color="inherit">
                     <FaCheck
                       className={classNames(
                         'tw-text-3xl',
@@ -242,10 +240,10 @@ function App() {
                       )}
                     />
                   </Button>
-                  <div className="tw-bg-blue-500 tw-flex-grow hover:tw-text-[--mui-color-primary-main] tw-whitespace-pre-wrap tw-leading-relaxed tw-break-words">
+                  <div className="tw-bg-[#dcdcdc] tw-w-[2px] tw-h-[60px] tw-self-center"></div>
+                  <div className="tw-bg-blue-300 tw-flex tw-items-center tw-p-3 tw-flex-grow hover:tw-text-[--mui-color-primary-main] tw-whitespace-pre-wrap tw-leading-relaxed tw-break-words">
                     {todo.content}
                   </div>
-                  {/* <div className="tw-bg-green-500 tw-w-[150px] tw-flex-shrink-0">후</div> */}
                   <Button className="tw-flex-shrink-0 tw-rounded-[0_10px_10px_0]" color="inherit">
                     <FaEllipsisV className="tw-text-[#dcdcdc] tw-text-2xl" />
                   </Button>
