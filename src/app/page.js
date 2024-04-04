@@ -4,7 +4,7 @@ import * as React from 'react';
 import { ThemeProvider } from '@mui/material/styles';
 import classNames from 'classnames';
 import { Button, AppBar, Toolbar, CssBaseline, TextField, Chip, Box } from '@mui/material';
-import { FaBars, FaCheck } from 'react-icons/fa';
+import { FaBars, FaCheck, FaEllipsisV } from 'react-icons/fa';
 import RootTheme from './theme';
 import dateToStr from './dateUtil';
 
@@ -245,7 +245,10 @@ function App() {
                   <div className="tw-bg-blue-500 tw-flex-grow hover:tw-text-[--mui-color-primary-main] tw-whitespace-pre-wrap tw-leading-relaxed tw-break-words">
                     {todo.content}
                   </div>
-                  <div className="tw-bg-green-500 tw-w-[150px] tw-flex-shrink-0">후</div>
+                  {/* <div className="tw-bg-green-500 tw-w-[150px] tw-flex-shrink-0">후</div> */}
+                  <Button className="tw-flex-shrink-0 tw-rounded-[0_10px_10px_0]" color="inherit">
+                    <FaEllipsisV className="tw-text-[#dcdcdc] tw-text-2xl" />
+                  </Button>
                 </div>
               </div>
             </li>
