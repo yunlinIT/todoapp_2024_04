@@ -18,6 +18,7 @@ import {
   ListItem,
   Divider,
   ListItemButton,
+  Modal,
 } from '@mui/material';
 import { FaBars, FaCheck, FaEllipsisH, FaTrash } from 'react-icons/fa';
 import { FaPenToSquare } from 'react-icons/fa6';
@@ -158,6 +159,16 @@ function useTodoOptionDrawerStatus() {
 }
 
 function TodoOptionDrawer({ status }) {
+  const [editTodoModalOpened, setEditTodoModalOpened] = React.useState(false);
+
+  const openEditModal = () => {
+    setEditTodoModalOpened(true);
+  };
+
+  const closeEditModal = () => {
+    setEditTodoModalOpened(false);
+  };
+
   return (
     <>
       <SwipeableDrawer anchor="top" open={status.opened} onClose={status.close} onOpen={() => {}}>
@@ -167,7 +178,9 @@ function TodoOptionDrawer({ status }) {
             <span>Your Todo</span>
           </ListItem>
           <Divider className="tw-my-[5px]" />
-          <ListItemButton className="tw-p-[15px_20px] tw-flex tw-gap-2 tw-items-center">
+          <ListItemButton
+            onClick={openEditModal}
+            className="tw-p-[15px_20px] tw-flex tw-gap-2 tw-items-center">
             <span>수정</span>
             <FaPenToSquare className="block tw-mt-[-5px]" />
           </ListItemButton>
@@ -177,6 +190,12 @@ function TodoOptionDrawer({ status }) {
           </ListItemButton>
         </List>
       </SwipeableDrawer>
+      <Modal
+        open={editTodoModalOpened}
+        onClose={closeEditModal}
+        className="tw-flex tw-justify-center tw-items-center">
+        <div className="tw-bg-white tw-p-10 tw-rounded-[20px]">안녕</div>
+      </Modal>
     </>
   );
 }
