@@ -17,8 +17,10 @@ import {
   List,
   ListItem,
   Divider,
+  ListItemButton,
 } from '@mui/material';
-import { FaBars, FaCheck, FaEllipsisH } from 'react-icons/fa';
+import { FaBars, FaCheck, FaEllipsisH, FaTrash } from 'react-icons/fa';
+import { FaPenToSquare } from 'react-icons/fa6';
 import RootTheme from './theme';
 import dateToStr from './dateUtil';
 
@@ -158,15 +160,21 @@ function useTodoOptionDrawerStatus() {
 function TodoOptionDrawer({ status }) {
   return (
     <>
-      <SwipeableDrawer anchor="top" open={status.opened} onClose={status.close}>
+      <SwipeableDrawer anchor="top" open={status.opened} onClose={status.close} onOpen={() => {}}>
         <List>
           <ListItem className="tw-flex tw-gap-2 tw-p-[15px]">
             <span className="tw-text-[--mui-color-primary-main]">{status.todoId}번 </span>
             <span>Your Todo</span>
           </ListItem>
           <Divider className="tw-my-[5px]" />
-          <ListItem className="tw-p-[15px_20px]">수정</ListItem>
-          <ListItem className="tw-p-[15px_20px]">삭제</ListItem>
+          <ListItemButton className="tw-p-[15px_20px] tw-flex tw-gap-2 tw-items-center">
+            <span>수정</span>
+            <FaPenToSquare className="block tw-mt-[-5px]" />
+          </ListItemButton>
+          <ListItemButton className="tw-p-[15px_20px] tw-flex tw-gap-2 tw-items-center">
+            <span>삭제</span>
+            <FaTrash className="block tw-mt-[-5px]" />
+          </ListItemButton>
         </List>
       </SwipeableDrawer>
     </>
