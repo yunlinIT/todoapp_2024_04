@@ -177,7 +177,7 @@ function useEditTodoModalStatus() {
   };
 }
 
-function TodoOptionDrawer({ status }) {
+function TodoOptionDrawer({ status, todo }) {
   const editTodoModalStatus = useEditTodoModalStatus();
 
   return (
@@ -205,7 +205,22 @@ function TodoOptionDrawer({ status }) {
         open={editTodoModalStatus.opened}
         onClose={editTodoModalStatus.close}
         className="tw-flex tw-justify-center tw-items-center">
-        <div className="tw-bg-white tw-p-10 tw-rounded-[20px]">안녕</div>
+        <div className="tw-bg-white tw-p-10 tw-rounded-[20px]">
+          할 일 수정
+          <form onSubmit={(e) => onSubmit(e)} className="tw-flex tw-flex-col tw-p-4 tw-gap-2">
+            <TextField
+              minRows={3}
+              maxRows={10}
+              multiline
+              name="content"
+              autoComplete="off"
+              label={status.todoId} // the actual todo is not included. the actual todo variable required. //TODO
+            />
+            <Button variant="contained" className="tw-font-bold" type="submit">
+              수정
+            </Button>
+          </form>
+        </div>
       </Modal>
     </>
   );
