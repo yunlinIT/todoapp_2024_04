@@ -2,8 +2,9 @@
 
 import * as React from 'react';
 import { ThemeProvider } from '@mui/material/styles';
+import classNames from 'classnames';
 import { Button, AppBar, Toolbar, CssBaseline, TextField, Chip, Box } from '@mui/material';
-import { FaBars } from 'react-icons/fa';
+import { FaBars, FaCheck } from 'react-icons/fa';
 import RootTheme from './theme';
 import dateToStr from './dateUtil';
 
@@ -215,21 +216,31 @@ function App() {
       할 일 갯수 : {todosState.todos.length}
       <nav>
         <ul>
-          {todosState.todos.map((todo) => (
+          {todosState.todos.map((todo, index) => (
             <li key={todo.id}>
-              <div className="tw-flex tw-flex-col tw-gap-2 tw-mt-[30px]">
-                <Chip
-                  className="tw-pt-3"
-                  label={`번호 : ${todo.id}`}
-                  variant="outlined"
-                  color="primary"></Chip>
-                <Chip
-                  className="tw-pt-3"
-                  label={`날짜 : ${todo.regDate}`}
-                  variant="outlined"></Chip>
-                <div className="tw-p-10 tw-rounded-[20px] tw-shadow tw-flex">
-                  <Button className="tw-rounded-[20px_0_0_20px] hover:tw-bg-red-300 tw-flex-shrink-0 tw-items-center">
-                    <span>체크박스</span>
+              <div className="tw-flex tw-flex-col tw-gap-2 tw-mt-3">
+                <div className="tw-flex tw-gap-x-2 tw-font-bold">
+                  <Chip className="tw-pt-[3px]" label={`번호 : ${todo.id}`} variant="outlined" />
+                  <Chip
+                    className="tw-pt-[3px]"
+                    label={`날짜 : ${todo.regDate}`}
+                    variant="outlined"
+                    color="primary"
+                  />
+                </div>
+                <div className="tw-rounded-[10px] tw-shadow tw-flex tw-text-[14px]">
+                  <Button
+                    className="tw-flex-shrink-0 tw-rounded-[10px_0_0_10px] hover:tw-bg-red-300 tw-items-start"
+                    color="inherit">
+                    <FaCheck
+                      className={classNames(
+                        'tw-text-3xl',
+                        {
+                          'tw-text-[--mui-color-primary-main]': index % 2 == 0,
+                        },
+                        { 'tw-text-[#dcdcdc]': index % 2 != 0 },
+                      )}
+                    />
                   </Button>
                   <div className="tw-bg-blue-500 tw-flex-grow hover:tw-text-[--mui-color-primary-main] tw-whitespace-pre-wrap tw-leading-relaxed tw-break-words">
                     {todo.content}
