@@ -19,6 +19,8 @@ import {
   Divider,
   ListItemButton,
   Modal,
+  Snackbar,
+  Alert,
 } from '@mui/material';
 import { FaBars, FaCheck, FaEllipsisH, FaTrash } from 'react-icons/fa';
 import { FaPenToSquare } from 'react-icons/fa6';
@@ -332,6 +334,8 @@ const TodoList = ({ todosState }) => {
 function App() {
   const todosState = useTodosStatus();
 
+  const [open, setOpen] = React.useState(false);
+
   React.useEffect(() => {
     todosState.addTodo('스쿼트\n런지');
     todosState.addTodo('벤치');
@@ -340,6 +344,11 @@ function App() {
 
   return (
     <>
+      <Snackbar open={open} autoHideDuration={4000} onClose={() => setOpen(false)}>
+        <Alert variant="filled" severity="success">
+          게시물 삭제됨
+        </Alert>
+      </Snackbar>
       <AppBar position="fixed">
         <Toolbar>
           <div className="tw-flex-1">
