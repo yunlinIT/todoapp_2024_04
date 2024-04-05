@@ -50,11 +50,26 @@ function useTodosStatus() {
     setTodos(newTodos);
   };
 
+  const findTodoIndexById = (id) => {
+    return todos.findIndex((todo) => todo.id == id);
+  };
+
+  const findTodoById = (id) => {
+    const index = findTodoIndexById(id);
+
+    if (index == -1) {
+      return null;
+    }
+
+    return todos[index];
+  };
+
   return {
     todos,
     addTodo,
     removeTodo,
     modifyTodo,
+    findTodoById,
   };
 }
 
@@ -96,7 +111,7 @@ const NewTodoForm = ({ todosState }) => {
   );
 };
 
-const TodoListItem = ({ todo, index, openDrawer }) => {
+const TodoListItem = ({ todo, index, openDrawer, todosState }) => {
   return (
     <>
       <li key={todo.id}>
@@ -177,11 +192,61 @@ function useEditTodoModalStatus() {
   };
 }
 
-function TodoOptionDrawer({ status, todo }) {
-  const editTodoModalStatus = useEditTodoModalStatus();
+function EditTodoModal({ status, todosState, todo }) {
+  const onSubmit = (e) => {
+    e.preventDefault();
+
+    const form = e.currentTarget;
+
+    form.content.value = form.content.value.trim();
+
+    if (form.content.value.length == 0) {
+      alert('할 일 써');
+      form.content.focus();
+      return;
+    }
+
+    // todosState.addTodo(form.content.value);
+    // form.content.value = '';
+    // form.content.focus();
+  };
 
   return (
     <>
+      <Modal
+        open={status.opened}
+        onClose={status.close}
+        className="tw-flex tw-justify-center tw-items-center">
+        <div className="tw-bg-white tw-p-10 tw-rounded-[20px] tw-w-full tw-max-w-lg">
+          <form onSubmit={onSubmit} className="tw-flex tw-flex-col tw-gap-2">
+            <TextField
+              minRows={3}
+              maxRows={10}
+              multiline
+              name="content"
+              autoComplete="off"
+              variant="outlined"
+              label="할 일 써"
+              defaultValue={todo?.content}
+            />
+            <Button variant="contained" className="tw-font-bold" type="submit">
+              수정
+            </Button>
+          </form>
+        </div>
+      </Modal>
+    </>
+  );
+}
+
+function TodoOptionDrawer({ status, todosState }) {
+  const editTodoModalStatus = useEditTodoModalStatus();
+
+  const todo = todosState.findTodoById(status.todoId);
+
+  return (
+    <>
+      <EditTodoModal status={editTodoModalStatus} todosState={todosState} todo={todo} />
       <SwipeableDrawer anchor="top" open={status.opened} onClose={status.close} onOpen={() => {}}>
         <List>
           <ListItem className="tw-flex tw-gap-2 tw-p-[15px]">
@@ -201,27 +266,6 @@ function TodoOptionDrawer({ status, todo }) {
           </ListItemButton>
         </List>
       </SwipeableDrawer>
-      <Modal
-        open={editTodoModalStatus.opened}
-        onClose={editTodoModalStatus.close}
-        className="tw-flex tw-justify-center tw-items-center">
-        <div className="tw-bg-white tw-p-10 tw-rounded-[20px]">
-          할 일 수정
-          <form onSubmit={(e) => onSubmit(e)} className="tw-flex tw-flex-col tw-p-4 tw-gap-2">
-            <TextField
-              minRows={3}
-              maxRows={10}
-              multiline
-              name="content"
-              autoComplete="off"
-              label={status.todoId} // the actual todo is not included. the actual todo variable required. //TODO
-            />
-            <Button variant="contained" className="tw-font-bold" type="submit">
-              수정
-            </Button>
-          </form>
-        </div>
-      </Modal>
     </>
   );
 }
@@ -231,7 +275,7 @@ const TodoList = ({ todosState }) => {
 
   return (
     <>
-      <TodoOptionDrawer status={todoOptionDrawerStatus} />
+      <TodoOptionDrawer status={todoOptionDrawerStatus} todosState={todosState} />
       <nav>
         할 일 갯수 : {todosState.todos.length}
         <ul>
@@ -241,6 +285,7 @@ const TodoList = ({ todosState }) => {
               todo={todo}
               index={index}
               openDrawer={todoOptionDrawerStatus.open}
+              todosState={todosState}
             />
           ))}
         </ul>
