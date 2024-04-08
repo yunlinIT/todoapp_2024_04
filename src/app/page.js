@@ -154,7 +154,7 @@ const NewTodoForm = ({ noticeSnackbarStatus }) => {
   );
 };
 
-const TodoListItem = ({ todo, index, openDrawer, todosStatus }) => {
+const TodoListItem = ({ todo, index, openDrawer }) => {
   return (
     <>
       <li key={todo.id}>
@@ -235,7 +235,8 @@ function useEditTodoModalStatus() {
   };
 }
 
-function EditTodoModal({ status, todosStatus, todo, noticeSnackbarStatus }) {
+function EditTodoModal({ status, todo, noticeSnackbarStatus }) {
+  const todosStatus = useTodosStatus();
   const onSubmit = (e) => {
     e.preventDefault();
 
@@ -287,7 +288,8 @@ function EditTodoModal({ status, todosStatus, todo, noticeSnackbarStatus }) {
   );
 }
 
-function TodoOptionDrawer({ status, todosStatus, noticeSnackbarStatus }) {
+function TodoOptionDrawer({ status, noticeSnackbarStatus }) {
+  const todosStatus = useTodosStatus();
   const removeTodo = () => {
     if (confirm(`${status.todoId}번 할 일을 삭제하시겠습니까?`) == false) {
       status.close();
@@ -307,7 +309,6 @@ function TodoOptionDrawer({ status, todosStatus, noticeSnackbarStatus }) {
     <>
       <EditTodoModal
         status={editTodoModalStatus}
-        todosStatus={todosStatus}
         todo={todo}
         noticeSnackbarStatus={noticeSnackbarStatus}
       />
@@ -340,14 +341,14 @@ function TodoOptionDrawer({ status, todosStatus, noticeSnackbarStatus }) {
   );
 }
 
-const TodoList = ({ todosStatus, noticeSnackbarStatus }) => {
+const TodoList = ({ noticeSnackbarStatus }) => {
+  const todosStatus = useTodosStatus();
   const todoOptionDrawerStatus = useTodoOptionDrawerStatus();
 
   return (
     <>
       <TodoOptionDrawer
         status={todoOptionDrawerStatus}
-        todosStatus={todosStatus}
         noticeSnackbarStatus={noticeSnackbarStatus}
       />
       <nav>
@@ -359,7 +360,6 @@ const TodoList = ({ todosStatus, noticeSnackbarStatus }) => {
               todo={todo}
               index={index}
               openDrawer={todoOptionDrawerStatus.open}
-              todosStatus={todosStatus}
             />
           ))}
         </ul>
@@ -443,7 +443,7 @@ function App() {
       <Toolbar />
       <NoticeSnackbar status={noticeSnackbarStatus} />
       <NewTodoForm noticeSnackbarStatus={noticeSnackbarStatus} />
-      <TodoList todosStatus={todosStatus} noticeSnackbarStatus={noticeSnackbarStatus} />
+      <TodoList noticeSnackbarStatus={noticeSnackbarStatus} />
     </>
   );
 }
