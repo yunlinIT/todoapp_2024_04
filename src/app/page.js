@@ -125,6 +125,7 @@ const NewTodoForm = ({ noticeSnackbarStatus }) => {
 
     if (form.content.value.length == 0) {
       alert('할 일을 작성해주세요! :)');
+
       form.content.focus();
       return;
     }
@@ -181,6 +182,7 @@ const TodoListItem = ({ todo, index, openDrawer }) => {
               />
             </Button>
             <div className="tw-bg-[#dcdcdc] tw-w-[2px] tw-h-[60px] tw-self-center"></div>
+
             <div className="tw-bg-pink-100 tw-flex tw-items-center tw-p-3 tw-flex-grow hover:tw-text-[--mui-color-primary-main] tw-whitespace-pre-wrap tw-leading-relaxed tw-break-words">
               {todo.content}
             </div>
@@ -245,7 +247,7 @@ function EditTodoModal({ status, todo, noticeSnackbarStatus }) {
     form.content.value = form.content.value.trim();
 
     if (form.content.value.length == 0) {
-      alert('할 일 써');
+      alert('할 일을 작성해주세요');
       form.content.focus();
       return;
     }
@@ -254,7 +256,7 @@ function EditTodoModal({ status, todo, noticeSnackbarStatus }) {
     todosStatus.modifyTodo(todo.id, form.content.value);
     status.close();
 
-    noticeSnackbarStatus.open(`${todo.id}번 todo 수정됨`);
+    noticeSnackbarStatus.open(`${todo.id}번 TODO가 수정되었습니다.`);
 
     // modify v2
     // todosStatus.modifyTodoById(todo.id, form.content.value);
@@ -275,7 +277,7 @@ function EditTodoModal({ status, todo, noticeSnackbarStatus }) {
               name="content"
               autoComplete="off"
               variant="outlined"
-              label="할 일 써"
+              label="할 일을 작성해주세요"
               defaultValue={todo?.content}
             />
             <Button variant="contained" className="tw-font-bold" type="submit">
@@ -298,7 +300,7 @@ function TodoOptionDrawer({ status, noticeSnackbarStatus }) {
 
     todosStatus.removeTodo(status.todoId);
     status.close();
-    noticeSnackbarStatus.open(`${status.todoId}번 todo 삭제됨`, 'error');
+    noticeSnackbarStatus.open(`${status.todoId}번 TODO가 삭제되었습니다.`, 'error');
   };
 
   const editTodoModalStatus = useEditTodoModalStatus();
@@ -419,8 +421,8 @@ function App() {
 
   React.useEffect(() => {
     todosStatus.addTodo('분리수거\n설거지');
-    todosStatus.addTodo('빨래');
-    todosStatus.addTodo('고양이 밥주기');
+    todosStatus.addTodo('운동');
+    todosStatus.addTodo('개인 프로젝트');
   }, []);
 
   return (
